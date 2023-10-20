@@ -7,7 +7,10 @@ app.use(express.json());
 app.use(express.static("public"));
 
 app.get("/", (req,res)=>{
-    res.render("index.ejs");
+    res.render("index.ejs",{
+        allTasks:allTasks,
+        doingTasks: doingTasks,
+    });
 })
 
 app.post("/newTask", (req,res)=>{
@@ -16,7 +19,8 @@ app.post("/newTask", (req,res)=>{
         tasks(task);
     }
     res.render("index.ejs", {
-        allTasks: allTasks
+        allTasks:allTasks,
+        doingTasks: doingTasks,
     })
 })
 
@@ -64,12 +68,8 @@ app.post("/doing", (req,res) =>{
             doing(clickedTask);
             remove(clickedTask);
         }
-        return;
     }
-    res.render("index.ejs",{
-        allTasks:allTasks,
-        doingTasks: doingTasks,
-    })
+    res.redirect("/newTask")
 })
 
 // app.post("/done", (req,res)=>{
