@@ -3,11 +3,11 @@
 <div class="sections">
     <div class="allCards">
         <div class="cards" id="toDo">
-            <h1>To do</h1>
+            <h1 id="heroLogo">List[it]</h1>
             <% if(locals.allTasks){%>
                 <ol>
                     <% for(var i = 0 ; i < locals.allTasks.length ; i++){ %>
-                         <li id="<%= "task"+ i %>" onclick="clicked(this.id)"><%= locals.allTasks[i] %></li>
+                         <li class="allTasks" id="<%= "task"+ i %>" onclick="clicked(this.id)"><%= locals.allTasks[i] %></li>
                     <% } %>
                 </ol>
             <% } else{%>
@@ -17,10 +17,10 @@
         <div class="cards" id="doing">
             <h1>Doing</h1>
             <% if (locals.doingTasks) { %>
-                <ol>
-                    <% for( var j = 0; j < locals.doingTasks.length; j++ ) { %>
-                        <li id="<%= "doing" + j %>" onclick="clicked(this.id)"> <%= locals.doingTasks[j] %> </li>
-                    <% } %>
+                <ol id="doingList">
+                    <% for(var i = 0 ; i < locals.doingTasks.length ; i++){ %>
+                        <li class="doingList" id="<%= "task"+ i %>" onclick="clicked(this.id)"><%= locals.doingTasks[i] %></li>
+                   <% } %>
                 </ol>
             <% } else{ %>
                 <p>Do Something Dawg</p>
@@ -28,6 +28,15 @@
         </div>
         <div class="cards" id="done">
             <h1>Done</h1>
+            <% if (locals.doneTasks) { %>
+                <ol id="doneList">
+                    <% for(var i = 0 ; i < locals.doneTasks.length ; i++){ %>
+                        <li class="doneList" id="<%= "Done"+ i %>" onclick="clicked(this.id)"><%= locals.doneTasks[i] %></li>
+                   <% } %>
+                </ol>
+            <% } else{ %>
+                <p>Looking kinda empty dawg</p>
+                <% } %>
         </div>
     </div>
     <form action="/newTask" method="POST">

@@ -1,0 +1,4 @@
+/* CSS HEX */
+--black: #000000ff;
+--raisin-black: #27272Aff;
+--antiflash-white: #ECECECff;

@@ -1,4 +1,4 @@
-import express from "express";
+import express, { json } from "express";
 
 const app = express();
 const port = 3000;
@@ -7,10 +7,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 app.get("/", (req,res)=>{
-    res.render("index.ejs",{
-        allTasks:allTasks,
-        doingTasks: doingTasks,
-    });
+    res.render("index.ejs");
 })
 
 app.post("/newTask", (req,res)=>{
@@ -21,6 +18,7 @@ app.post("/newTask", (req,res)=>{
     res.render("index.ejs", {
         allTasks:allTasks,
         doingTasks: doingTasks,
+        doneTasks: doneTasks
     })
 })
 
@@ -38,16 +36,17 @@ function doing(value){
         doingTasks.push(value);
         console.log(doingTasks.length);
         console.log(doingTasks);
+        return;
     }
 }
 
-// var doneTasks = []
-// function done(value){
-//     if(value){
-//         doneTasks.push(value);
-//         console.log(doneTasks.length);
-//     }
-// }
+var doneTasks = []
+function done(value){
+    if(value){
+        doneTasks.push(value);
+        console.log(doneTasks.length);
+    }
+}
 
 
 function remove(value){
@@ -55,9 +54,21 @@ function remove(value){
         if(value === allTasks[i]){
             let indexToBeRemoved = allTasks.indexOf(value);
             allTasks.splice(indexToBeRemoved, 1);
+            return;
         }
     }
 }
+
+function removeDoing(value){
+    for(let i = 0; i < doingTasks.length ; i++){
+        if(value === doingTasks[i]){
+            let indexToBeRemoved = doingTasks.indexOf(value);
+            doingTasks.splice(indexToBeRemoved, 1);
+            return;
+        }
+    }
+}
+
 
 app.post("/doing", (req,res) =>{
     let clickedTask = req.body.clickedTask;
@@ -67,26 +78,36 @@ app.post("/doing", (req,res) =>{
             console.log("Found Element");
             doing(clickedTask);
             remove(clickedTask);
+            res.json({
+                success: true,
+                allTasks: allTasks,
+                doingTasks: doingTasks,
+            })
+            return;
         }
-    }
-    res.redirect("/newTask")
+    } res.json({
+        success: false,
+        message: "task not found",
+    })
 })
 
-// app.post("/done", (req,res)=>{
-//     // res.json({ message: 'Data received' });
-//     let clickedTask = req.body.clickedTask;
-//     console.log(clickedTask);
-//     allTasks.forEach(element => {
-//         if(clickedTask === allTasks[element]){
-//             done(clickedTask);
-//             remove(clickedTask);
-//             res.render("index.ejs",{
-//                 clickedTask: clickedTask,
-//             })
-//         }
-//     });
+app.post("/done", (req,res)=>{
 
-// })
+    let clickedTask = req.body.clickedTask;
+    console.log(clickedTask);
+    for(let i = 0 ; i < doingTasks.length ; i++){
+        if(clickedTask === doingTasks[i]){
+            done(clickedTask);
+            removeDoing(clickedTask);
+            res.json({
+                success:true,
+                allTasks: allTasks,
+                doingTasks: doingTasks,
+                doneTasks: doneTasks
+            })
+        }   
+    }
+})
 
 app.listen(port, () =>{
     console.log("Server is running on "+port);
