@@ -19,7 +19,7 @@
             <% if (locals.doingTasks) { %>
                 <ol id="doingList">
                     <% for(var i = 0 ; i < locals.doingTasks.length ; i++){ %>
-                        <li class="doingList" id="<%= "task"+ i %>" onclick="clicked(this.id)"><%= locals.doingTasks[i] %></li>
+                        <li class="doingList" id="<%= "doing"+ i %>" onclick="clicked(this.id)"><%= locals.doingTasks[i] %></li>
                    <% } %>
                 </ol>
             <% } else{ %>

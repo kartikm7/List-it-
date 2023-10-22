@@ -27,6 +27,7 @@ function tasks(value){
     if(value){
         allTasks.push(value);
         console.log(allTasks.length);
+        return;
     }
 }
 

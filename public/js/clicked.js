@@ -60,7 +60,12 @@ function updateUI(clickedID, json , clickedTask){
         li.setAttribute("id", `doing${count}`)
         li.setAttribute("class", "doingList")
         li.setAttribute("onclick", "clicked(this.id)")
-        doingList.appendChild(li);  
+        doingList.appendChild(li)
+        let doneElement = document.getElementById("doing")
+        doneElement.classList.add("glow")
+        setTimeout(() => {
+            doneElement.classList.remove("glow")
+        }, 3000);
         return;
         // for(let i = 0 ; i < json.doingTasks.length ; i++){
         //     let li = document.createElement("li");
@@ -79,5 +84,13 @@ function updateUI(clickedID, json , clickedTask){
         li.setAttribute("class", "doneList")
         li.setAttribute("onclick", "clicked(this.id)")
         doneList.appendChild(li);
+        let doneElement = document.getElementById("done");
+        doneElement.classList.add("animate");
+
+        setTimeout(() => {
+            doneElement.classList.remove("animate");
+        },3000);
+        // document.getElementById('done').style.visibility="visible";
+        // document.getElementById('done').style.animation="third 2500ms ease-in-out";
     }
 }
